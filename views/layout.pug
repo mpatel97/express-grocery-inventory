@@ -2,6 +2,25 @@ doctype html
 html
   head
     title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    header.navbar.navbar-dark.navbar-expand-lg.bg-primary
+      a.navbar-brand(href='#') Grocery Inventory
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#toggle-nav')
+        span.navbar-toggler-icon
+      #toggle-nav.collapse.navbar-collapse
+        .navbar-nav
+          a.nav-link(href='/' class=(title == 'Grocery Inventory' ? 'active' : '') ) Home
+          a.nav-link(href='/items' class=(title == 'Items List' ? 'active' : '') ) Items
+          a.nav-link(href='/categories' class=(title == 'Categories List' ? 'active' : '') ) Categories
+    .container
+      .row
+        .col
+          .page-header= title
+
+          block content
