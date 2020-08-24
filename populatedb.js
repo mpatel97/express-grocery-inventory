@@ -62,19 +62,19 @@ async.series([
         categoryCreate('Cereal', 'Breakfast cereal is a traditional breakfast made from processed cereal grains.', callback);
     },
     function (callback) {
-        itemCreate("Coca-Cola 1.5L", "Carbonated soft drink manufactured by The Coca-Cola Company.", categories[2], false, 25, callback);
+        itemCreate("Coca-Cola 1.5L", "Carbonated soft drink manufactured by The Coca-Cola Company.", categories[2], 199, 25, callback);
     },
     function (callback) {
-        itemCreate("Wattie's Peaches Sliced in Clear Fruit Juice 420g", "Grown under the sun in Hawke's Bay orchards and hand-picked, only the finest golden peaches are good enough to be chosen by Wattie's.", categories[3], 2.8, 9, callback);
+        itemCreate("Wattie's Peaches Sliced in Clear Fruit Juice 420g", "Grown under the sun in Hawke's Bay orchards and hand-picked, only the finest golden peaches are good enough to be chosen by Wattie's.", categories[3], 280, 9, callback);
     },
     function (callback) {
-        itemCreate("Wattie's Baken Beans 420g", "Baked beans are high in dietary fibre, high in protein and naturally low in fat with no added colours or preservatives.", categories[3], 2, 4, callback);
+        itemCreate("Wattie's Baken Beans 420g", "Baked beans are high in dietary fibre, high in protein and naturally low in fat with no added colours or preservatives.", categories[3], 200, 4, callback);
     },
     function (callback) {
-        itemCreate("Sprite 1.5L", "Sprite is a lemon-lime flavoured soft drink with a crisp, clean taste that gives you the ultimate cut-through refreshment.", categories[2], 1.9, 0, callback);
+        itemCreate("Sprite 1.5L", "Sprite is a lemon-lime flavoured soft drink with a crisp, clean taste that gives you the ultimate cut-through refreshment.", categories[2], 197, 0, callback);
     },
     function (callback) {
-        itemCreate("Haribo Starmix 150g", "Carbonated soft drink manufactured by The Coca-Cola Company.", categories[1], 2.09, 13, callback);
+        itemCreate("Haribo Starmix 150g", "Carbonated soft drink manufactured by The Coca-Cola Company.", categories[1], 209, 13, callback);
     }],
 
     // Optional callback

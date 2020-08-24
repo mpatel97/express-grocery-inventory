@@ -6,3 +6,7 @@ a {
   margin: 1rem 0;
   font-size: 2rem;
 }
+
+.card {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+}

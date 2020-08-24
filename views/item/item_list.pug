@@ -1,19 +1,23 @@
 extend ..\layout
 
 block content
-    .card.shadow-sm
-        table.table.table-sm.table-hover.mb-0
-            thead.thead-light
-                tr
-                    th Name
-                    th Category
-                    th Price
-                    th Stock Count
-            tbody
-                each item in item_list
+    .card
+        .card-header.d-flex.align-items-center
+            h5.mb-0 View All Items
+            a.btn.btn-info.ml-auto(href='item/create') Create New Item
+        .card-body
+            table.table.table-sm.table-hover.table-bordered.mb-0
+                thead.thead-light
                     tr
-                        td 
-                            a(href=item.url) #{item.name}
-                        td #{item.category.name}
-                        td #{item.price}
-                        td #{item.number_in_stock}
+                        th Name
+                        th Category
+                        th Price
+                        th Stock Count
+                tbody
+                    each item in item_list
+                        tr
+                            td 
+                                a(href=item.url) #{item.name}
+                            td #{item.category.name}
+                            td #{item.formatted_price}
+                            td #{item.number_in_stock}

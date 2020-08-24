@@ -12,14 +12,10 @@ router.get('/', function (_req, res) {
 /// ITEM ROUTES ///
 
 // GET Item Create page
-router.get('/item/create', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.get('/item/create', item_controller.item_create_get);
 
 // POST Item Create page
-router.post('/item/create', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.post('/item/create', item_controller.item_create_post);
 
 // GET Item Update page
 router.get('/item/:id/update', function (req, res, next) {
@@ -42,9 +38,7 @@ router.post('/item/:id/delete', function (req, res, next) {
 });
 
 // GET Item detail page
-router.get('/item/:id', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.get('/item/:id', item_controller.item_detail);
 
 // GET Items list page
 router.get('/items', item_controller.item_list);

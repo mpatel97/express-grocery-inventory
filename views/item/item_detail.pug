@@ -1,0 +1,25 @@
+extend ..\layout
+
+block content
+
+    .card
+        .card-header.d-flex
+            span.badge.badge-pill.ml-auto(class= (item.stock_status == 'Available' ? 'badge-success' : item.stock_status == 'Low Stock' ? 'badge-warning' : 'badge-danger') ) #{item.stock_status}
+        .card-body
+            .row
+                .col-md-2
+                    img.card-img(src='/images/placeholder.png')
+                .col-md-10.mt-2              
+                    .row
+                        .col-sm-8
+                            h4.card-title= item.name
+                            p.card-text= item.description
+                        .col-sm-4.d-flex
+                            .ml-auto 
+                                div <strong>Price: </strong> #{item.formatted_price}
+                                div <strong>Category: </strong><a href=#{item.category.url}>#{item.category.name}<a>
+                                div <strong>Stock Count: </strong> #{item.number_in_stock}
+        .card-footer.d-flex
+            a.btn.btn-primary.card-link.ml-auto(href=item.url + '/update') Update Details
+            a.btn.btn-danger.card-link(href=item.url + '/delete') Delete Item
+            

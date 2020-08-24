@@ -31,6 +31,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect jQuery JS
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect Bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/bs-custom-file-input/dist')); // redirect Bootstrap Custom File Input JS
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect Bootstrap CSS
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
