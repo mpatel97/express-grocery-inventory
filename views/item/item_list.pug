@@ -1,13 +1,19 @@
 extend ..\layout
 
 block content
-    
-    table.table.table-sm.table-hover
-        thead.thead-light
-            tr
-                th Name
-                th Category
-                th Price
-                th Stock Count
-        tbody
-            
+    .card.shadow-sm
+        table.table.table-sm.table-hover.mb-0
+            thead.thead-light
+                tr
+                    th Name
+                    th Category
+                    th Price
+                    th Stock Count
+            tbody
+                each item in item_list
+                    tr
+                        td 
+                            a(href=item.url) #{item.name}
+                        td #{item.category.name}
+                        td #{item.price}
+                        td #{item.number_in_stock}

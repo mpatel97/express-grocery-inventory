@@ -1,83 +1,90 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+const category_controller = require('../controllers/categoryController');
+const item_controller = require('../controllers/itemController');
 
 // GET Home page
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function (_req, res) {
+  res.render('index', { title: 'Grocery Inventory' });
 });
 
 /// ITEM ROUTES ///
 
-// GET Items list page
-router.get('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
-});
-
 // GET Item Create page
-router.get('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
+router.get('/item/create', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
 });
 
 // POST Item Create page
-router.post('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
+router.post('/item/create', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
 });
 
 // GET Item Update page
-router.get('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
+router.get('/item/:id/update', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
 });
 
 // POST Item Update page
-router.post('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
+router.post('/item/:id/update', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
 });
 
 // GET Item Delete page
-router.get('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
+router.get('/item/:id/delete', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
 });
 
 // POST Item Delete page
-router.post('/items', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' })
+router.post('/item/:id/delete', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
 });
+
+// GET Item detail page
+router.get('/item/:id', function (req, res, next) {
+  res.render('item/item_list', { title: 'Items List' });
+});
+
+// GET Items list page
+router.get('/items', item_controller.item_list);
 
 /// CATEGORY ROUTES ///
 
-// GET Categories list page
-router.get('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
-});
-
 // GET Category Create page
-router.get('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
-});
+router.get('/category/create',);
 
 // POST Category Create page
-router.post('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
+router.post('/category/create', function (req, res, next) {
+  res.render('category/category_list', { title: 'Categories List' });
 });
 
 // GET Category Update page
-router.get('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
+router.get('/category/:id/update', function (req, res, next) {
+  res.render('category/category_list', { title: 'Categories List' });
 });
 
 // POST Category Update page
-router.post('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
+router.post('/category/:id/update', function (req, res, next) {
+  res.render('category/category_list', { title: 'Categories List' });
 });
 
 // GET Category Delete page
-router.get('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
+router.get('/category/:id/delete', function (req, res, next) {
+  res.render('category/category_list', { title: 'Categories List' });
 });
 
 // POST Category Delete page
-router.post('/categories', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' })
+router.post('/category/:id/delete', function (req, res, next) {
+  res.render('category/category_list', { title: 'Categories List' });
 });
+
+// GET Categorie detail page
+router.get('/category/:id', function (req, res, next) {
+  res.render('category/category_list', { title: 'Categories List' });
+});
+
+// GET Categories list page
+router.get('/categories', category_controller.category_list);
 
 module.exports = router;

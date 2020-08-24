@@ -1,6 +1,9 @@
 extend ..\layout
 
 block content
-    .card
-        .card-body
-            h4.card-title Something
+    each category in category_list
+        .card.mb-2
+            .card-body
+                h4.card-title #{category.name}
+                p.card-text=category.description
+                a.card-link(href=category.url) View Details

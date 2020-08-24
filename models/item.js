@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var ItemSchema = new Schema({
     name: { type: String, required: true, maxlength: 100 },
     description: { type: String, required: true },
-    category: { type: Schema.Types.ObjectId, ref: 'category', required: true },
+    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     price: { type: Number },
     number_in_stock: { type: Number, required: true }
 });
