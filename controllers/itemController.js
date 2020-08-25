@@ -238,6 +238,16 @@ exports.item_update_post = [
                     return next(err);
                 }
 
+                // Remove image from uploads folder
+                if (req.file) {
+                    fs.unlink(path.join(__dirname + '/../uploads/' + req.file.filename), (err) => {
+                        if (err) {
+                            debug('image delete error:' + err);
+                            return next(err)
+                        }
+                    });
+                }
+
                 // Successful - redirect to item detail page.
                 res.redirect(updated_item.url);
             });
