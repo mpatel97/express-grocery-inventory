@@ -31,7 +31,7 @@ block content
                                 label.form-label(for='number_in_stock') Stock Count
                                 input#number_in_stock.form-control(name='number_in_stock' required)
                             .form-group.col-sm-6
-                                label.form-label(for='image') Item Image
+                                label.form-label.d-flex.align-items-center(for='image') Item Image #[small.ml-auto Max File Size: 150KB]
                                 .custom-file    
                                     input#image.custom-file-input(type='file' name='image')
                                     label.custom-file-label(for='image') Choose Image
@@ -41,7 +41,7 @@ block content
                     h4.alert-heading Warning
                     ul.mb-1
                         for error in errors
-                            li!= error.msg
+                            li!= error
             
         .card-footer.d-flex
             a.btn.btn-secondary.ml-auto(href='/items') Cancel
