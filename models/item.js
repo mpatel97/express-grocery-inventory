@@ -30,7 +30,7 @@ ItemSchema.virtual('stock_status').get(function () {
 
 // Virtual for formatted Item price, convert int to float
 ItemSchema.virtual('formatted_price').get(function () {
-    return '$' + (this.price / 100).toFixed(2);
+    return (this.price / 100).toFixed(2);
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

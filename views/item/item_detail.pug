@@ -7,11 +7,11 @@ block content
             span.badge.badge-pill.ml-auto(class= (item.stock_status == 'Available' ? 'badge-success' : item.stock_status == 'Low Stock' ? 'badge-warning' : 'badge-danger') ) #{item.stock_status}
         .card-body
             .row
-                .col-md-2
+                .col-md-2.d-flex.flex-column
                     if (item.image != null && item.image.data != null)
-                        img.card-img.shadow-sm(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64')) 
+                        img.card-img(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64')) 
                     else
-                        img.card-img.shadow-sm(src='/images/placeholder.png')
+                        img.card-img(src='/images/placeholder.png')
                     
                 .col-md-10.mt-2              
                     .row
@@ -20,7 +20,7 @@ block content
                             p.card-text= item.description
                         .col-sm-4.d-flex
                             .ml-auto 
-                                div <strong>Price: </strong> #{item.formatted_price}
+                                div <strong>Price: </strong> $#{item.formatted_price}
                                 div <strong>Category: </strong><a href=#{item.category.url}>#{item.category.name}<a>
                                 div <strong>Stock Count: </strong> #{item.number_in_stock}
         .card-footer.d-flex

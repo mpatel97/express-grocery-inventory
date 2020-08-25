@@ -18,14 +18,10 @@ router.get('/item/create', item_controller.item_create_get);
 router.post('/item/create', item_controller.item_create_post);
 
 // GET Item Update page
-router.get('/item/:id/update', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.get('/item/:id/update', item_controller.item_update_get);
 
 // POST Item Update page
-router.post('/item/:id/update', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.post('/item/:id/update', item_controller.item_update_post);
 
 // GET Item Delete page
 router.get('/item/:id/delete', function (req, res, next) {

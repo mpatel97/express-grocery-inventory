@@ -6,30 +6,36 @@ block content
         .card-body
             .row
                 .col-md-2.d-flex.flex-column
-                    img.card-img.mt-auto.mb-auto(src='/images/placeholder.png')
+                    if (item.image != null && item.image.data != null)
+                        img.card-img(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64'))
+                    else
+                        img.card-img(src='/images/placeholder.png')
 
                 .col-md-10.mt-2
                     form#createForm(action='' method='POST' enctype='multipart/form-data')
                         .form-row
                             .form-group.col-sm-6
                                 label.form-label(for='name') Name
-                                input#name.form-control(name='name' required)
+                                input#name.form-control(name='name' required value=(item ? item.name : ''))
                             .form-group.col-sm-6
                                 label.form-label(for='category') Category
                                 select#name.custom-select(name='category')
                                     each category in category_list
-                                        option(value=category.id) #{category.name}
+                                        if item
+                                            option(value=category.id selected=(item.category == category.id ? true : false)) #{category.name}
+                                        else
+                                            option(value=category.id) #{category.name}
                         .form-row
                             .form-group.col
                                 label.form-label(for='description') Description
-                                textarea#description.form-control(name='description' row=2 required)
+                                textarea#description.form-control(name='description' row=2 required) #{item ? item.description : ''}
                         .form-row
                             .form-group.col-sm-3
                                 label.form-label(for='price') Price ($)
-                                input#price.form-control(name='price' required)
+                                input#price.form-control(name='price' required value=(item ? item.formatted_price : ''))
                             .form-group.col-sm-3
                                 label.form-label(for='number_in_stock') Stock Count
-                                input#number_in_stock.form-control(name='number_in_stock' required)
+                                input#number_in_stock.form-control(name='number_in_stock' required value=(item ? item.number_in_stock : ''))
                             .form-group.col-sm-6
                                 label.form-label.d-flex.align-items-center(for='image') Item Image #[small.ml-auto Max File Size: 150KB]
                                 .custom-file    
@@ -37,7 +43,7 @@ block content
                                     label.custom-file-label(for='image') Choose Image
 
             if errors 
-                .alert.alert-warning
+                .alert.alert-warning.mb-0.mt-2
                     h4.alert-heading Warning
                     ul.mb-1
                         for error in errors
