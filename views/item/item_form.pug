@@ -9,11 +9,11 @@ block content
                     img.card-img.mt-auto.mb-auto(src='/images/placeholder.png')
 
                 .col-md-10.mt-2
-                    form(action='' method='POST' enctype='multipart/form-data')
+                    form#createForm(action='' method='POST' enctype='multipart/form-data')
                         .form-row
                             .form-group.col-sm-6
                                 label.form-label(for='name') Name
-                                input#name.form-control(name='name')
+                                input#name.form-control(name='name' required)
                             .form-group.col-sm-6
                                 label.form-label(for='category') Category
                                 select#name.custom-select(name='category')
@@ -22,20 +22,27 @@ block content
                         .form-row
                             .form-group.col
                                 label.form-label(for='description') Description
-                                textarea#description.form-control(name='description' row=2)
+                                textarea#description.form-control(name='description' row=2 required)
                         .form-row
                             .form-group.col-sm-3
                                 label.form-label(for='price') Price ($)
-                                input#price.form-control(name='price')
+                                input#price.form-control(name='price' required)
                             .form-group.col-sm-3
                                 label.form-label(for='number_in_stock') Stock Count
-                                input#number_in_stock.form-control(name='number_in_stock')
+                                input#number_in_stock.form-control(name='number_in_stock' required)
                             .form-group.col-sm-6
                                 label.form-label(for='image') Item Image
                                 .custom-file    
                                     input#image.custom-file-input(type='file' name='image')
                                     label.custom-file-label(for='image') Choose Image
-        
+
+            if errors 
+                .alert.alert-warning
+                    h4.alert-heading Warning
+                    ul.mb-1
+                        for error in errors
+                            li!= error.msg
+            
         .card-footer.d-flex
             a.btn.btn-secondary.ml-auto(href='/items') Cancel
-            button.btn.btn-primary.ml-2(type='submit') Save Item
+            button.btn.btn-primary.ml-2(type='submit' form='createForm') Save Item

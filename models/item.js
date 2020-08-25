@@ -9,7 +9,8 @@ var ItemSchema = new Schema({
     description: { type: String, required: true },
     category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     price: { type: mongoose.Types.Currency, min: 0, required: true },
-    number_in_stock: { type: Number, required: true }
+    number_in_stock: { type: Number, required: true },
+    image: { data: Buffer, contentType: String }
 });
 
 // Virtual for Item's url

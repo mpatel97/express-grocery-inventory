@@ -1,9 +1,14 @@
 extend ..\layout
 
 block content
-    each category in category_list
-        .card.mb-2
-            .card-body
-                h4.card-title #{category.name}
-                p.card-text=category.description
-                a.card-link(href=category.url) View Details
+    .card
+        .card-header.d-flex.align-items-center
+            h5.mb-0 View All Categories
+            a.btn.btn-info.ml-auto(href='category/create') Create New Category
+        .card-body
+            each category in category_list
+                .card.mb-2
+                    .card-body
+                        h4.card-title #{category.name}
+                        p.card-text=category.description
+                        a.card-link(href=category.url) View Details

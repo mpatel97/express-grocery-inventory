@@ -46,12 +46,10 @@ router.get('/items', item_controller.item_list);
 /// CATEGORY ROUTES ///
 
 // GET Category Create page
-router.get('/category/create',);
+router.get('/category/create', category_controller.category_create_get);
 
 // POST Category Create page
-router.post('/category/create', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' });
-});
+router.post('/category/create', category_controller.category_create_post);
 
 // GET Category Update page
 router.get('/category/:id/update', function (req, res, next) {

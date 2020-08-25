@@ -2,6 +2,19 @@ const Category = require('../models/category');
 const Item = require('../models/item');
 const async = require('async');
 const debug = require('debug')('item');
+const fs = require('fs');
+const path = require('path');
+
+const multer = require('multer');
+const upload = multer({
+    dest: 'uploads/', fileFilter: function (_req, file, callback) {
+        if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/gif' && file.mimetype !== 'image/jpeg') {
+            return callback(new Error('Only .png, .jpg, .jpeg & .gif format allowed!'))
+        }
+        callback(null, true)
+    }, limits: { fileSize: 100000 } // Set file size limit to 100KB
+})
+
 const { body, validationResult } = require('express-validator');
 
 exports.item_list = (_req, res, next) => {
@@ -50,17 +63,20 @@ exports.item_create_get = (_req, res, next) => {
 
 exports.item_create_post = [
 
+    // Get image file from request body
+    upload.single('image'),
+
     // Validate & sanitize
-    body('name', 'Name must be specified').trim().escape(),
-    body('category', 'Category must be specified').trim().escape(),
-    body('description', 'Description must be specified').trim().escape(),
-    body('price', 'Price must be specified').trim().escape(),
-    body('number_in_stock', 'Stock Count must be specified').trim().escape(),
+    body('name', 'Name must be specified').trim().isLength({ min: 1 }).escape(),
+    body('category', 'Category must be specified').trim().isLength({ min: 1 }).escape(),
+    body('description', 'Description must be specified').trim().isLength({ min: 1 }).escape(),
+    body('price', 'Price must be specified').trim().isLength({ min: 1 }).escape(),
+    body('number_in_stock', 'Stock Count must be specified').trim().isLength({ min: 1 }).escape(),
 
     // Process request
     (req, res, next) => {
 
-        // Extract validaiton errors
+        // Extract validation errors
         const errors = validationResult(req);
 
         // Create new Item object with sanitized field values
@@ -71,6 +87,14 @@ exports.item_create_post = [
             price: req.body.price,
             number_in_stock: req.body.number_in_stock
         });
+
+        // Add image to Item object if image file is submitted
+        if (req.file) {
+            new_item.image = {
+                data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename)),
+                contentType: req.file.mimetype
+            }
+        }
 
         // Validation errors found
         if (!errors.isEmpty()) {
@@ -87,12 +111,21 @@ exports.item_create_post = [
         }
         else {
             // Form data is valid
-
             new_item.save((err) => {
                 if (err) {
                     debug('create error:' + err);
                     return next(err)
                 };
+
+                // Remove image from uploads folder
+                if (req.file) {
+                    fs.unlink(path.join(__dirname + '/../uploads/' + req.file.filename), (err) => {
+                        if (err) {
+                            debug('image delete error:' + err);
+                            return next(err)
+                        }
+                    });
+                }
 
                 // Successful - redirect to item's detail page
                 res.redirect(new_item.url);

@@ -1,0 +1,26 @@
+extend ../layout
+
+block content
+
+    .card
+        .card-body
+            form#createForm(action='' method='POST')
+                .form-row
+                    .form-group.col-sm-6
+                        label.form-label(for='name') Name
+                        input#name.form-control(name='name' required)
+                .form-row
+                    .form-group.col
+                        label.form-label(for='description') Description
+                        textarea#description.form-control(name='description' row=2 required)
+
+            if errors 
+                .alert.alert-warning
+                    h4.alert-heading Warning
+                    ul.mb-1
+                        for error in errors
+                            li!= error.msg
+            
+        .card-footer.d-flex
+            a.btn.btn-secondary.ml-auto(href='/categories') Cancel
+            button.btn.btn-primary.ml-2(type='submit' form='createForm') Save Category

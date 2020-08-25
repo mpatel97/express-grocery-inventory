@@ -8,7 +8,11 @@ block content
         .card-body
             .row
                 .col-md-2
-                    img.card-img(src='/images/placeholder.png')
+                    if (item.image != null && item.image.data != null)
+                        img.card-img.shadow-sm(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64')) 
+                    else
+                        img.card-img.shadow-sm(src='/images/placeholder.png')
+                    
                 .col-md-10.mt-2              
                     .row
                         .col-sm-8
