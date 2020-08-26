@@ -64,9 +64,7 @@ router.post('/category/:id/delete', function (req, res, next) {
 });
 
 // GET Categorie detail page
-router.get('/category/:id', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' });
-});
+router.get('/category/:id', category_controller.category_detail);
 
 // GET Categories list page
 router.get('/categories', category_controller.category_list);

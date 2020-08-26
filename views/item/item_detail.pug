@@ -24,6 +24,5 @@ block content
                                 div <strong>Category: </strong><a href=#{item.category.url}>#{item.category.name}<a>
                                 div <strong>Stock Count: </strong> #{item.number_in_stock}
         .card-footer.d-flex
-            a.btn.btn-primary.card-link.ml-auto(href=item.url + '/update') Update Details
-            a.btn.btn-danger.card-link(href=item.url + '/delete') Delete Item
-            
+            a.btn.btn-primary.ml-auto.mr-2(href=item.url + '/update') Update Details
+            a.btn.btn-danger(href=item.url + '/delete') Delete Item 

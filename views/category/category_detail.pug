@@ -1,0 +1,26 @@
+extend ..\layout
+
+block content
+
+    .card
+        .card-body       
+            h4.card-title= category.name
+            p.card-text= category.description
+
+            hr
+
+            h5.card-title Items
+
+            if item_list.length > 0
+                ul
+                    each item in item_list
+
+                        li 
+                            a(href=item.url) #{item.name}
+            else
+                p.card-text No Item's under this Category
+
+        .card-footer.d-flex
+            a.btn.btn-primary.ml-auto.mr-2(href=category.url + '/update') Update Details
+            a.btn.btn-danger(href=category.url + '/delete') Delete Category
+            

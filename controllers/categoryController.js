@@ -15,6 +15,32 @@ exports.category_list = (_req, res, next) => {
     });
 }
 
+exports.category_detail = (req, res, next) => {
+
+    async.parallel({
+        category: (callback) => {
+            Category.findById(req.params.id).exec(callback);
+        },
+        item_list: (callback) => {
+            Item.find({ 'category': req.params.id }).exec(callback)
+        }
+    }, (err, results) => {
+        if (err) {
+            debug('detail error:' + err);
+            return next(err)
+        };
+
+        if (results == null) {
+            let err = new Error('Category not found');
+            err.status = 404;
+            debug('detail error:' + err);
+            return next(err);
+        }
+
+        res.render('category/category_detail', { title: 'Category Detail', category: results.category, item_list: results.item_list });
+    });
+};
+
 exports.category_create_get = (_req, res) => {
     res.render('category/category_form', { title: 'Create New Category' });
 };
