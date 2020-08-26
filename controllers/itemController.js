@@ -4,7 +4,7 @@ const async = require('async');
 const debug = require('debug')('item');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config({ path: __dirname + '/../.env' })
+require('dotenv').config({ path: __dirname + '/../.env' });
 
 const multer = require('multer')({
     dest: 'uploads/',

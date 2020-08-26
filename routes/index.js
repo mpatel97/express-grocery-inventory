@@ -44,24 +44,16 @@ router.get('/category/create', category_controller.category_create_get);
 router.post('/category/create', category_controller.category_create_post);
 
 // GET Category Update page
-router.get('/category/:id/update', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' });
-});
+router.get('/category/:id/update', category_controller.category_update_get);
 
 // POST Category Update page
-router.post('/category/:id/update', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' });
-});
+router.post('/category/:id/update', category_controller.category_update_post);
 
 // GET Category Delete page
-router.get('/category/:id/delete', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' });
-});
+router.get('/category/:id/delete', category_controller.category_delete_get);
 
 // POST Category Delete page
-router.post('/category/:id/delete', function (req, res, next) {
-  res.render('category/category_list', { title: 'Categories List' });
-});
+router.post('/category/:id/delete', category_controller.category_delete_post);
 
 // GET Categorie detail page
 router.get('/category/:id', category_controller.category_detail);

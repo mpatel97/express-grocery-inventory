@@ -3,24 +3,27 @@ extend ../layout
 block content
 
     .card
-        .card-body
-            form#createForm(action='' method='POST')
+        form(action='' method='POST')
+            .card-body
                 .form-row
                     .form-group.col-sm-6
                         label.form-label(for='name') Name
-                        input#name.form-control(name='name' required)
+                        input#name.form-control(name='name' required value=(category ? category.name : ''))
                 .form-row
                     .form-group.col
                         label.form-label(for='description') Description
-                        textarea#description.form-control(name='description' row=2 required)
+                        textarea#description.form-control(name='description' row=2 required) #{category ? category.description : ''}
 
-            if errors 
-                .alert.alert-warning
-                    h4.alert-heading Warning
-                    ul.mb-1
-                        for error in errors
-                            li!= error.msg
+                if errors 
+                    .alert.alert-warning.mb-0.mt-2
+                        h4.alert-heading Warning
+                        ul.mb-1
+                            for error in errors
+                                li!= error.msg
             
-        .card-footer.d-flex
-            a.btn.btn-secondary.ml-auto(href='/categories') Cancel
-            button.btn.btn-primary.ml-2(type='submit' form='createForm') Save Category
+            .card-footer.d-flex
+                a.btn.btn-secondary.ml-auto.mr-2(href='/categories') Cancel
+                .input-group.col-md-4.col-xs-12.p-0
+                    input#confirm_save.form-control(name='confirm_save' placeholder='Admin Password' type='password' required)
+                    .input-group-append
+                        button.btn.btn-primary(type='submit') Save Category
