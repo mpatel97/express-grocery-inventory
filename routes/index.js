@@ -24,14 +24,10 @@ router.get('/item/:id/update', item_controller.item_update_get);
 router.post('/item/:id/update', item_controller.item_update_post);
 
 // GET Item Delete page
-router.get('/item/:id/delete', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.get('/item/:id/delete', item_controller.item_delete_get);
 
 // POST Item Delete page
-router.post('/item/:id/delete', function (req, res, next) {
-  res.render('item/item_list', { title: 'Items List' });
-});
+router.post('/item/:id/delete', item_controller.item_delete_post);
 
 // GET Item detail page
 router.get('/item/:id', item_controller.item_detail);

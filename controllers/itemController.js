@@ -4,6 +4,7 @@ const async = require('async');
 const debug = require('debug')('item');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: __dirname + '/../.env' })
 
 const multer = require('multer')({
     dest: 'uploads/',
@@ -76,6 +77,9 @@ exports.item_create_post = [
     body('description', 'Description must be specified').trim().isLength({ min: 1 }).escape(),
     body('price', 'Price must be specified').trim().isLength({ min: 1 }).escape(),
     body('number_in_stock', 'Stock Count must be specified').trim().isLength({ min: 1 }).escape(),
+    body('confirm_save').isLength({ min: 1 }).withMessage('Admin Password is required')
+        .equals(process.env.ADMIN_PASSWORD).withMessage('Invalid Password')
+        .escape(),
 
     // Process request
     (req, res, next) => {
@@ -98,6 +102,14 @@ exports.item_create_post = [
                 data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename)),
                 contentType: req.file.mimetype
             }
+
+            // Remove image from uploads folder
+            fs.unlink(path.join(__dirname + '/../uploads/' + req.file.filename), (err) => {
+                if (err) {
+                    debug('image delete error:' + err);
+                    return next(err)
+                }
+            });
         }
 
         // Validation errors found
@@ -110,6 +122,9 @@ exports.item_create_post = [
             image_upload(req, res, (err) => {
                 if (err) all_errors.push(`Item Image: ${err.message}`);
             });
+
+            // Remove image from item object
+            item.image = {};
 
             // Retrieve all Categories
             Category.find({}, (err, category_list) => {
@@ -129,16 +144,6 @@ exports.item_create_post = [
                     debug('create error:' + err);
                     return next(err)
                 };
-
-                // Remove image from uploads folder
-                if (req.file) {
-                    fs.unlink(path.join(__dirname + '/../uploads/' + req.file.filename), (err) => {
-                        if (err) {
-                            debug('image delete error:' + err);
-                            return next(err)
-                        }
-                    });
-                }
 
                 // Successful - redirect to item's detail page
                 res.redirect(item.url);
@@ -183,6 +188,9 @@ exports.item_update_post = [
     body('description', 'Description must be specified').trim().isLength({ min: 1 }).escape(),
     body('price', 'Price must be specified').trim().isLength({ min: 1 }).escape(),
     body('number_in_stock', 'Stock Count must be specified').trim().isLength({ min: 1 }).escape(),
+    body('confirm_save').isLength({ min: 1 }).withMessage('Admin Password is required')
+        .equals(process.env.ADMIN_PASSWORD).withMessage('Invalid Password')
+        .escape(),
 
     // Process request
     (req, res, next) => {
@@ -206,6 +214,14 @@ exports.item_update_post = [
                 data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename)),
                 contentType: req.file.mimetype
             }
+
+            // Remove image from uploads folder
+            fs.unlink(path.join(__dirname + '/../uploads/' + req.file.filename), (err) => {
+                if (err) {
+                    debug('image delete error:' + err);
+                    return next(err);
+                }
+            });
         }
 
         // Validation errors found
@@ -218,6 +234,9 @@ exports.item_update_post = [
             image_upload(req, res, (err) => {
                 if (err) all_errors.push(`Item Image: ${err.message}`);
             });
+
+            // Remove image from item object
+            item.image = {};
 
             // Retrieve all Categories
             Category.find({}, (err, category_list) => {
@@ -238,16 +257,6 @@ exports.item_update_post = [
                     return next(err);
                 }
 
-                // Remove image from uploads folder
-                if (req.file) {
-                    fs.unlink(path.join(__dirname + '/../uploads/' + req.file.filename), (err) => {
-                        if (err) {
-                            debug('image delete error:' + err);
-                            return next(err)
-                        }
-                    });
-                }
-
                 // Successful - redirect to item detail page.
                 res.redirect(updated_item.url);
             });
@@ -255,10 +264,67 @@ exports.item_update_post = [
     }
 ];
 
-exports.item_delete_get = {
+exports.item_delete_get = (req, res, next) => {
+    Item.findById(req.params.id).populate('category').exec((err, item) => {
+        if (err) {
+            debug('delete error:' + err);
+            return next(err)
+        };
 
+        if (item == null) {
+            let err = new Error('Item not found');
+            err.status = 404;
+            debug('delete error:' + err);
+            return next(err);
+        }
+
+        res.render('item/item_delete', { title: 'Delete Item', item });
+    });
 };
 
-exports.item_delete_post = {
+exports.item_delete_post = [
 
-};
+    // Validate & sanitize admin password field
+    body('confirm_delete')
+        .isLength({ min: 1 }).withMessage('Admin Password is required')
+        .equals(process.env.ADMIN_PASSWORD).withMessage('Invalid Password')
+        .escape(),
+
+    (req, res, next) => {
+
+        // Extract validation errors
+        const errors = validationResult(req);
+
+        Item.findById(req.body.itemid, (err, result) => {
+            if (err) {
+                debug('delete error:' + err);
+                return next(err)
+            };
+
+            if (result == null) {
+                let err = new Error('Item not found');
+                err.status = 404;
+                debug('delete error:' + err);
+                return next(err);
+            }
+
+            if (!errors.isEmpty()) {
+                res.render('item/item_delete', { title: 'Delete Item', item: result, error: errors.array()[0] });
+                return;
+            }
+            else {
+                // Remove Item
+                Item.findByIdAndRemove(req.body.itemid, { useFindAndModify: false }, (err) => {
+                    if (err) {
+                        debug('delete error:' + err);
+                        return next(err)
+                    };
+
+                    // Success - go to item's list
+                    res.redirect('/items')
+                })
+            }
+        });
+    }
+
+];

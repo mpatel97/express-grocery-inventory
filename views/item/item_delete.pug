@@ -1,0 +1,41 @@
+extend ..\layout
+
+block content
+
+    .card
+        form(action='' method='POST')
+            .card-header.d-flex
+                span.badge.badge-pill.ml-auto(class= (item.stock_status == 'Available' ? 'badge-success' : item.stock_status == 'Low Stock' ? 'badge-warning' : 'badge-danger') ) #{item.stock_status}
+            .card-body
+                .row
+                    .col-md-2.d-flex.flex-column
+                        if (item.image != null && item.image.data != null)
+                            img.card-img(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64')) 
+                        else
+                            img.card-img(src='/images/placeholder.png')
+                        
+                    .col-md-10.mt-2              
+                        .row
+                            .col-sm-8
+                                h4.card-title= item.name
+                                p.card-text= item.description
+                                p.pt-3
+                                    input#itemid(type='hidden' name='itemid' value=item.id)
+                                    strong Do you really want to delete this Item?
+                            .col-sm-4.d-flex
+                                .ml-auto 
+                                    div <strong>Price: </strong> $#{item.formatted_price}
+                                    div <strong>Category: </strong><a href=#{item.category.url}>#{item.category.name}<a>
+                                    div <strong>Stock Count: </strong> #{item.number_in_stock}
+
+                if error
+                    .alert.alert-warning.mb-0.mt-4
+                        h4.alert-heading Warning
+                        =error.msg
+
+            .card-footer.d-flex
+                a.btn.btn-secondary.ml-auto.mr-2(href=item.url) Cancel
+                .input-group.col-md-4.col-xs-12.p-0
+                    input#confirm_delete.form-control(name='confirm_delete' placeholder='Admin Password' type='password' required)
+                    .input-group-append
+                        button.btn.btn-danger(type='submit') Confirm Delete

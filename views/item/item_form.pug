@@ -3,23 +3,24 @@ extend ../layout
 block content
 
     .card
-        .card-body
-            .row
-                .col-md-2.d-flex.flex-column
-                    if (item.image != null && item.image.data != null)
-                        img.card-img(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64'))
-                    else
-                        img.card-img(src='/images/placeholder.png')
+        form(action='' method='POST' enctype='multipart/form-data')
+            .card-body
+                .row
+                    .col-md-2.d-flex.flex-column
+                        if (item && item.image != null && item.image.data != null)
+                            img.card-img(src='data:image/' + item.image.contentType + ';base64,' + item.image.data.toString('base64'))
+                        else
+                            img.card-img(src='/images/placeholder.png')
 
-                .col-md-10.mt-2
-                    form#createForm(action='' method='POST' enctype='multipart/form-data')
+                    .col-md-10.mt-2
+                        
                         .form-row
                             .form-group.col-sm-6
                                 label.form-label(for='name') Name
                                 input#name.form-control(name='name' required value=(item ? item.name : ''))
                             .form-group.col-sm-6
                                 label.form-label(for='category') Category
-                                select#name.custom-select(name='category')
+                                select#category.custom-select(name='category')
                                     each category in category_list
                                         if item
                                             option(value=category.id selected=(item.category == category.id ? true : false)) #{category.name}
@@ -42,13 +43,16 @@ block content
                                     input#image.custom-file-input(type='file' name='image')
                                     label.custom-file-label(for='image') Choose Image
 
-            if errors 
-                .alert.alert-warning.mb-0.mt-2
-                    h4.alert-heading Warning
-                    ul.mb-1
-                        for error in errors
-                            li!= error
-            
-        .card-footer.d-flex
-            a.btn.btn-secondary.ml-auto(href='/items') Cancel
-            button.btn.btn-primary.ml-2(type='submit' form='createForm') Save Item
+                if errors 
+                    .alert.alert-warning.mb-0.mt-2
+                        h4.alert-heading Warning
+                        ul.mb-1
+                            for error in errors
+                                li!= error
+                
+            .card-footer.d-flex
+                a.btn.btn-secondary.ml-auto.mr-2(href='/items') Cancel
+                .input-group.col-md-4.col-xs-12.p-0
+                    input#confirm_save.form-control(name='confirm_save' placeholder='Admin Password' type='password' required)
+                    .input-group-append
+                        button.btn.btn-primary(type='submit') Save Item
