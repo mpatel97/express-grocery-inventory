@@ -44,7 +44,7 @@ function itemCreate(name, description, category, price, number_in_stock, cb) {
 
 async.series([
     function (callback) {
-        categoryCreate('Bakers\' Confectionery', 'Bakers\' confectionery, also called flour confections, includes principally sweet pastries, cakes, and similar baked goods.', callback);
+        categoryCreate('Bakers Confectionery', 'Bakers confectionery, also called flour confections, includes principally sweet pastries, cakes, and similar baked goods.', callback);
     },
     function (callback) {
         categoryCreate('Sugar Confectionery', 'Sugar confectionery includes candies (usually called sweets in British English), candied nuts, chocolates, chewing gum, bubble gum, pastillage, and other confections that are made primarily of sugar.', callback);
@@ -65,10 +65,10 @@ async.series([
         itemCreate("Coca-Cola 1.5L", "Carbonated soft drink manufactured by The Coca-Cola Company.", categories[2], 199, 25, callback);
     },
     function (callback) {
-        itemCreate("Wattie's Peaches Sliced in Clear Fruit Juice 420g", "Grown under the sun in Hawke's Bay orchards and hand-picked, only the finest golden peaches are good enough to be chosen by Wattie's.", categories[3], 280, 9, callback);
+        itemCreate("Watties Peaches Sliced in Clear Fruit Juice 420g", "Grown under the sun in Hawkes Bay orchards and hand-picked, only the finest golden peaches are good enough to be chosen by Watties.", categories[3], 280, 9, callback);
     },
     function (callback) {
-        itemCreate("Wattie's Baken Beans 420g", "Baked beans are high in dietary fibre, high in protein and naturally low in fat with no added colours or preservatives.", categories[3], 200, 4, callback);
+        itemCreate("Watties Baken Beans 420g", "Baked beans are high in dietary fibre, high in protein and naturally low in fat with no added colours or preservatives.", categories[3], 200, 4, callback);
     },
     function (callback) {
         itemCreate("Sprite 1.5L", "Sprite is a lemon-lime flavoured soft drink with a crisp, clean taste that gives you the ultimate cut-through refreshment.", categories[2], 197, 0, callback);
