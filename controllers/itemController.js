@@ -22,6 +22,19 @@ const image_upload = multer.single('image');
 
 const { body, validationResult } = require('express-validator');
 
+exports.index = (_req, res) => {
+    async.parallel({
+        item_count: (callback) => {
+            Item.countDocuments({}, callback);
+        },
+        category_count: (callback) => {
+            Category.countDocuments({}, callback);
+        }
+    }, (err, results) => {
+        res.render('index', { title: 'Grocery Inventory', error: err, data: results });
+    });
+}
+
 exports.item_list = (_req, res, next) => {
 
     // Retrieve all Item's

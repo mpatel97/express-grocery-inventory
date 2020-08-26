@@ -1,5 +1,21 @@
 extends layout
 
 block content
+    .row
+        .col-sm-3
+            .card
+                .card-header Items
+                .card-body.d-flex.align-items-center
+                    h6.card-title.mb-0 Total Items Count:
+                    span.ml-auto=data.item_count
+                .card-footer
+                    a(href='/items') View All Items
 
-
+        .col-sm-3
+            .card
+                .card-header Categories
+                .card-body.d-flex.align-items-center
+                    h6.card-title.mb-0 Total Categories Count:
+                    span.ml-auto=data.category_count
+                .card-footer
+                    a(href='/categories') View All Categories

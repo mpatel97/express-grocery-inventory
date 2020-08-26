@@ -25,7 +25,7 @@ ItemSchema.virtual('stock_status').get(function () {
     else if (this.number_in_stock < 5)
         return 'Low Stock';
     else
-        return `Available`;
+        return 'Available';
 });
 
 // Virtual for formatted Item price, convert int to float

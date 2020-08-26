@@ -5,9 +5,7 @@ const category_controller = require('../controllers/categoryController');
 const item_controller = require('../controllers/itemController');
 
 // GET Home page
-router.get('/', function (_req, res) {
-  res.render('index', { title: 'Grocery Inventory' });
-});
+router.get('/', item_controller.index);
 
 /// ITEM ROUTES ///
 
